@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Etch-a-sketch</title>
+</head>
+
+<body>
+    <div class=inputs>
+        <label>Rows:</label>
+        <input id="numberOfrows" value="16"></input>
+        <label>Cols:</label>
+        <input id="numberOfcols" value="16"></input>
+        <button id="updateButton" onclick="updateGrid()">Update</button>
+    </div>
+    <div id="grid"></div>
+    <script>
+        function colorGrid() { this.style.backgroundColor = "#" + Math.floor(Math.random() * 16777215).toString(16); }
+        function createGrid(rows, cols) {
+            const container = document.querySelector('#grid');
+            container.style.setProperty('--grid-rows', rows);
+            container.style.setProperty('--grid-cols', cols);
+            for (c = 0; c < (rows * cols); c++) {
+                let item = document.createElement("div");
+                item.onmouseover = colorGrid;
+                container.appendChild(item).className = "grid-item";
+            };
+        }
+        function removeGrid() {
+            const container = document.querySelector('#grid');
+            console.log(container.children.length);
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+
+        }
+        function updateGrid() {
+            let n_rows = document.getElementById("numberOfrows").value;
+            let n_cols = document.getElementById("numberOfcols").value;
+            if (isNaN(n_rows) || isNaN(n_cols)) {
+                alert("Not a valid number.")
+                return;
+            }
+            let r = parseInt(n_rows);
+            let c = parseInt(n_cols);
+            removeGrid();
+            createGrid(r, c);
+            console.log("grid updated");
+        }
+
+        updateGrid();
+
+    </script>
+</body>
+
+</html>
